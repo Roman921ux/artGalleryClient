@@ -4,15 +4,29 @@ import Header from './components/Header';
 
 function Layout() {
   return (
-    <Container>
+    <>
       <Header />
-      <Outlet />
-    </Container>
+
+      <MainBlock>
+        <Container>
+          <Outlet />
+        </Container>
+      </MainBlock>
+    </>
   );
 }
 
 export default Layout;
 
-const Container = styled.div`
-  
+const MainBlock = styled.div`
+  /* background-color: #e0bebe; */
+  margin-top: 34px;
 `;
+const Container = styled.div`
+/* border: 1px solid red; */
+  width: 1280px;
+  /* height: 60px; */
+  margin: 0 auto;
+  padding: 0 64px;
+`;
+
