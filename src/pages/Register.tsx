@@ -1,15 +1,23 @@
 import styled from 'styled-components';
 import regist from '../../public/img1.svg'
 import { ChangeEvent, FormEvent, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../feature/redux-hook';
+import { registerThunk } from '../feature/user/user-slice';
+// toast
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Register() {
+  // const notify = () => toast("Wow so easy!");
+  //
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch();
   const [value, setValue] = useState({
-    username: '',
+    firstName: '',
     email: '',
     password: ''
   })
-
   const onChangeValue = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setValue(prev => {
@@ -19,30 +27,67 @@ function Register() {
   const onSubmitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Обработка отправки формы
-    console.log(value);
+    // console.log('registerComp', value);
+    dispatch(registerThunk(value))
+      .then((response) => {
+        if (response.meta.requestStatus === 'rejected') {
+          toast.error('Ошибка при регистрации!', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+          throw new Error('Ошибка при регистрации пользователя');
+        } else {
+          toast.success('Вы зарегистрированы!', {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+          setTimeout(() => {
+            navigate('/login')
+          }, 2000);
+        }
+      })
+      .catch((error) => {
+        console.error('Ошибка при регистрации пользователя:', error.message);
+      });
+
     setValue({
-      username: '',
+      firstName: '',
       email: '',
       password: ''
     })
   }
 
+
   return (
     <Container>
       <LeftBlock src={regist} />
       <RightBlock>
-        <Title>SING UP</Title>
+        <ToastContainer />
+        <Title>SIGN UP</Title>
         <Form onSubmit={onSubmitForm}>
-          <Input placeholder='Name:' name='username' type='text' value={value.username} onChange={onChangeValue} />
+          <Input placeholder='Name:' name='firstName' type='text' value={value.firstName} onChange={onChangeValue} />
           <Input placeholder='Email:' name='email' type='email' value={value.email} onChange={onChangeValue} />
           <Input placeholder='Password:' name='password' type='password' value={value.password} onChange={onChangeValue} />
-          <Button type='submit'>Sign up</Button>
+          <Button type='submit'>Регистрация</Button>
         </Form>
         <Block>
           <Text>Уже зарегестрированы?</Text>
-          <NavLink to='/login' style={{ "color": "inherit" }}>LOG IN</NavLink>
+          <NavLink to='/login' style={{ "color": "inherit" }}>Войти</NavLink>
         </Block>
       </RightBlock>
+      <ToastContainer />
     </Container>
   );
 }

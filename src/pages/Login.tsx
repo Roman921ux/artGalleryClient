@@ -1,14 +1,21 @@
 import styled from 'styled-components';
 import regist from '../../public/img2.svg'
 import { ChangeEvent, FormEvent, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../feature/redux-hook';
+import { loginThunk } from '../feature/user/user-slice';
+// toast
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function Login() {
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
   const [value, setValue] = useState({
     email: '',
     password: ''
   })
-
 
   const onChangeValue = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -24,20 +31,54 @@ function Login() {
       email: '',
       password: ''
     })
+    dispatch(loginThunk(value))
+      .then((response) => {
+        if (response.meta.requestStatus === 'rejected') {
+          toast.error('Ошибка при авторизации!', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+          throw new Error('Ошибка при регистрации пользователя');
+        } else {
+          toast.success('Вы авторизованы!', {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+          setTimeout(() => {
+            navigate('/profile')
+          }, 2000);
+        }
+      })
+      .catch((error) => {
+        console.error('Ошибка при регистрации пользователя:', error.message);
+      });
   }
   return (
     <Container>
       <LeftBlock src={regist} />
+      <ToastContainer />
       <RightBlock>
         <Title>LOG IN</Title>
         <Form onSubmit={onSubmitForm}>
           <Input placeholder='Email:' name='email' type='email' value={value.email} onChange={onChangeValue} />
           <Input placeholder='Password:' name='password' type='password' value={value.password} onChange={onChangeValue} />
-          <Button type='submit'>Log in</Button>
+          <Button type='submit'>Войти</Button>
         </Form>
         <Block>
           <Text>Еще не зарегистрированы?</Text>
-          <NavLink to='/login' style={{ "color": "inherit" }}>SIGN UP</NavLink>
+          <NavLink to='/register' style={{ "color": "inherit" }}>Регистрация</NavLink>
         </Block>
       </RightBlock>
     </Container>
@@ -71,7 +112,7 @@ const RightBlock = styled.div`
 `;
 const Title = styled.span`
   font-size: 25px;
-  font-weight: 900;
+  font-weight: 800;
 `;
 const Text = styled.span`
   font-size: 12px;

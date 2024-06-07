@@ -1,29 +1,24 @@
 :root {
   /* Цветовая палитра */
-  /* --background-color: #ecf0f1;
-  --text-color: #2c3e50; */
-  --background-color: #ecf0f1;
-  --text-color: #000000;
+  --title-color: #000000;
+  --text-color: #919AA6;
+  --text-darkDim-color: rgba(1, 1, 1, 0.65);
+  --text-dim-color: #818C99;
+  /* это для серой кнопки */
+  --text-btnDim-color: #757575;
+  --backg-btnDim-color: #E9ECEF;
+  /* для лайков, комм и тп */
+  --text-btn-color: #626D7A;
+  --backg-btn-color: #F0F2F5;
+  /* дополнительно */
+  --border-color: #DCE1E6;
 
   /* Размеры шрифтов */
-  --font-size-small: 0.875rem;
-  --font-size-medium: 1rem;
-  --font-size-large: 1.25rem;
-  --font-size-xlarge: 1.5rem;
+  --fs-small: 12px;
+  --fs-medium: 16px;
+  --fs-large: 25px;
 
   /* Жирность шрифтов */
   --font-weight-normal: 400;
   --font-weight-bold: 700;
-
-  /* Отступы */
-  --spacing-small: 8px;
-  --spacing-medium: 16px;
-  --spacing-large: 24px;
-}
-
-body {
-  background-color: var(--background-color);
-  color: var(--text-color);
-  font-size: var(--font-size-medium);
-  font-weight: var(--font-weight-normal);
 }

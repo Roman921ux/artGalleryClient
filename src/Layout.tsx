@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
 import Header from './components/Header';
+import NavigatePanel from './components/HomePage/NavigatePanel';
 
 function Layout() {
   return (
@@ -9,7 +10,10 @@ function Layout() {
 
       <MainBlock>
         <Container>
-          <Outlet />
+          <NavigatePanel />
+          <div style={{ "width": "946px" }}>
+            <Outlet />
+          </div>
         </Container>
       </MainBlock>
     </>
@@ -24,8 +28,9 @@ const MainBlock = styled.div`
 `;
 const Container = styled.div`
 /* border: 1px solid red; */
-  width: 1280px;
-  /* height: 60px; */
+  width: 1152px;
+  display: flex;
+  justify-content: space-between;
   margin: 0 auto;
   padding: 0 64px;
 `;
