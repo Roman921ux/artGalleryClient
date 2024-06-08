@@ -12,15 +12,8 @@ function RequireAuth({ children }: Props) {
   const navigate = useNavigate()
 
 
-  // useLayoutEffect(() => {
-  //   // localStorage.clear();
-  //   const token = localStorage.getItem('token');
-  //   if (token) {
-  //     dispatch(setUserAuth(token))
-  //   }
-  // }, [])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
       dispatch(setUserAuth(token))

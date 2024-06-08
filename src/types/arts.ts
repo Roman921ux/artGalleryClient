@@ -41,6 +41,15 @@ export interface IArt {
   updatedAt: string;
   __v: number;
 }
+export interface IRoom {
+  _id: string;
+  nameRoom: string;
+  countArts: number;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
 
 
 type isLoading = 'loading' | 'idle'
@@ -51,5 +60,8 @@ export interface IArtsSlice {
   arts: IArt[] | [],
   popularArts: IArt[] | [],
   isLoading: isLoading,
-  isError: isError
+  isError: isError,
+  rooms: IRoom[],
+  detailArt: IArt | null,
+  activeRoom: string
 }

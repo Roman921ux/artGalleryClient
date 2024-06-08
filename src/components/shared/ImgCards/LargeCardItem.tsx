@@ -1,15 +1,20 @@
 import styled from 'styled-components';
-import { IArt } from '../../types/arts';
-import LikeBtn from '../shared/buttons/LikeBtn';
+import { IArt } from '../../../types/arts';
+import LikeBtn from '../buttons/LikeBtn';
 import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../feature/redux-hook';
+import axios from 'axios';
+import { getMeReducer } from '../../../feature/user/user-slice';
 
 interface Props {
   art: IArt;
 }
 
-function CardItem({ art }: Props) {
+function LargeCardItem({ art }: Props) {
+  const { myId, token } = useAppSelector(state => state.user)
   // const id = useParams<{ id: string }>();
+  const dispatch = useAppDispatch()
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -23,19 +28,41 @@ function CardItem({ art }: Props) {
   }
   const formattedDate = formatDate(art.createdAt);
 
-  // console.log('CardItem', location.pathname)
+
+  useEffect(() => {
+    const fetchInfoUser = async () => {
+      const { data } = await axios.get(`http://localhost:5000/api/auth/me`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+      // console.log('Our User', data)
+      // setUserInfo(data)
+      dispatch(getMeReducer(data))
+    }
+    fetchInfoUser()
+  }, [])
+
+  console.log('CardItem id', art.user, myId)
+  const isYourArt = art.user._id === myId
+  console.log('isYourArt', isYourArt)
   return (
     <Container>
       {art.imageUrl && (
-        <ImgBlock onClick={() => navigate(`/art/${art._id}`)}>
+        <ImgBlock onClick={() => navigate(`art/${art._id}`)}>
           <Img src={`http://localhost:5000${art.imageUrl}`} />
         </ImgBlock>
       )}
       <Block>
         <InfoBlock>
-          <Title onClick={() => navigate(`/art/${art._id}`)} style={{ maxWidth: '380px', cursor: 'pointer' }}>{art?.title}</Title>
+          <Block style={{ padding: '0', gap: '15px' }}>
+            <Title style={{ width: '380px' }}>{art?.title}</Title>
+            {art.text && <Description style={{ width: '700px' }}>{art.text}</Description>}
+          </Block>
           <UserInfoBlock>
-            {location.pathname === '/' && <NavLink style={{ color: 'inherit' }} to={`profile/${art.user._id}`}><Title>{art.user?.firstName}</Title></NavLink>}
+            {location.pathname === '/' || isYourArt === false && <NavLink style={{ color: 'inherit' }} to={`/profile/${art.user._id}`}><Title>{art.user?.firstName}</Title></NavLink>}
             <Text>{formattedDate}</Text>
           </UserInfoBlock>
         </InfoBlock>
@@ -43,11 +70,11 @@ function CardItem({ art }: Props) {
           <LikeBtn art={art} />
         </ReactionBlock>
       </Block>
-    </Container >
+    </Container>
   );
 }
 
-export default CardItem;
+export default LargeCardItem;
 
 const Container = styled.div`
   display: flex;
@@ -58,24 +85,25 @@ const Container = styled.div`
 `;
 
 const ImgBlock = styled.div`
-  height: 360px;
+  /* height: auto; */
   width: 100%;
   background-color: #dedede;
-  position: relative;
+  margin-bottom: -8px;
+  /* position: relative;
   overflow: hidden;
-  transition: transform 0.3s ease; /* Для плавного перехода */
+  transition: transform 0.3s ease; 
   &:hover img {
     transform: scale(1.05); 
     cursor: pointer;
-  }
+  } */
 `;
 const Img = styled.img`
-  object-fit: cover;
-  position: absolute;
+  /* object-fit: cover;
+  position: absolute; */
   width: 100%;
-  height: 360px;
+  height: auto;
   /* transform: translate(-50%, -50%); */
-  transition: transform 0.4s ease-in-out;
+  /* transition: transform 0.4s ease-in-out; */
 `;
 const Block = styled.div`
   display: flex;
@@ -102,6 +130,10 @@ const Title = styled.div`
 const Text = styled.div`
   font-size: var(--fs-small);
   color: var(--text-dim-color);
+`;
+const Description = styled.div`
+  font-size: var(--fs-medium);
+  color: var(--text-color);
 `;
 const ReactionBlock = styled.div`
 `;

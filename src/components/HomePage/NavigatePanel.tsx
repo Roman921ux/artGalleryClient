@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useAppSelector } from '../../feature/redux-hook';
 
 function NavigatePanel() {
-  const { _id } = useAppSelector(state => state.user.userInfo)
+  // const { _id } = useAppSelector(state => state.user?.userInfo)
   const [active, setActive] = useState(0);
   const styleBtn = (a: number) => {
     return {
@@ -19,7 +19,7 @@ function NavigatePanel() {
       <NavLink to='/' style={{ "color": "inherit" }} onClick={() => setActive(0)}>
         <BasiButton style={styleBtn(0)}>Элюстрации</BasiButton>
       </NavLink>
-      <NavLink to={`profile/${_id}`} style={{ "color": "inherit" }} onClick={() => setActive(1)}>
+      <NavLink to={`profile`} style={{ "color": "inherit" }} onClick={() => setActive(1)}>
         <BasiButton style={styleBtn(1)}>Профиль</BasiButton>
       </NavLink>
       <NavLink to='art' style={{ "color": "inherit" }} onClick={() => setActive(2)}>

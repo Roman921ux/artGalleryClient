@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 // PayloadAction
-import { ILogin, IRegisterUser, IUser } from "../../types/user";
+import { ILogin, IRegisterUser, IUser, IUserProfile } from "../../types/user";
 import axios from '../../utils/axios'
 import { IArt } from "../../types/arts";
 
@@ -16,7 +16,6 @@ export const registerThunk = createAsyncThunk(
     }
   }
 );
-
 export const loginThunk = createAsyncThunk(
   'user/login',
   async (body: ILogin) => {
@@ -39,7 +38,6 @@ export const loginThunk = createAsyncThunk(
     }
   }
 )
-
 export const getMe = createAsyncThunk(
   'user/getMe',
   async (token: string) => {
@@ -53,7 +51,7 @@ export const getMe = createAsyncThunk(
       });
       const data = await res.json()
       if (res.ok) {
-        // console.log('Getme', data)
+        console.log('Getme', data)
         return data
 
       } else {
@@ -64,12 +62,55 @@ export const getMe = createAsyncThunk(
     }
   }
 )
+export const updateFollowerUser = createAsyncThunk(
+  'art/updateFollowerUser',
+  async (userId: string, { getState }) => {
+    try {
+      const token = (getState() as { user: IUser }).user.token;
+      const { data } = await axios.patch(`follower/${userId}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+      console.log('Обновленный User', data)
+      return data
+    } catch (error) {
+      console.log('Error', error)
+    }
+  }
+)
+export const updateUnsubUser = createAsyncThunk(
+  'art/updateUnsubUser',
+  async (userId: string, { getState }) => {
+    try {
+      const token = (getState() as { user: IUser }).user.token;
+      const { data } = await axios.patch(`unsub/${userId}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+      console.log('Обновленный User после отписки', data)
+      return data
+    } catch (error) {
+      console.log('Error', error)
+    }
+  }
+)
 
 
 const initialState: IUser = {
   isAuthenticated: false,
   token: '',
+  myId: '',
   userInfo: {},
+  isLoading: 'idle',
+  isError: null
 };
 
 const userSlice = createSlice({
@@ -82,11 +123,27 @@ const userSlice = createSlice({
         state.isAuthenticated = false,
         localStorage.removeItem('token');
     },
+    changeArtstoLikeProfile: (state, action: PayloadAction<IArt>) => {
+      console.log('action.payload', action.payload)
+      const artId = action.payload._id
+      const index = state.userInfo.arts.items.findIndex((art: IArt) => art._id === artId);
+      if (index !== -1) {
+        state.userInfo.arts.items[index] = action.payload;
+      }
+
+    },
     setUserAuth: (state, action: PayloadAction<string>) => {
       state.token = action.payload
       state.isAuthenticated = true
       // console.log('isAuthenticated in Slice', state.isAuthenticated)
-    }
+    },
+    getMeReducer: (state, action: PayloadAction<IUserProfile>) => {
+      state.userInfo = action.payload;
+      state.myId = action.payload._id;
+    },
+    getUserReducer: (state, action: PayloadAction<IUserProfile>) => {
+      state.userInfo = action.payload;
+    },
   },
   extraReducers(builder) {
     builder
@@ -104,8 +161,29 @@ const userSlice = createSlice({
         //
         localStorage.setItem('token', action.payload.token);
       })
+      .addCase(updateFollowerUser.fulfilled, (state, action) => {
+        state.userInfo = action.payload
+      })
+      .addCase(updateUnsubUser.fulfilled, (state, action) => {
+        state.userInfo = action.payload
+      })
+      .addMatcher((action) => action.type.endsWith('/pending'),
+        (state) => {
+          state.isLoading = 'loading';
+          state.isError = null;
+        })
+      .addMatcher((action) => action.type.endsWith('/rejected'),
+        (state, action) => {
+          state.isLoading = 'idle';
+          state.isError = 'error';
+        })
+      .addMatcher((action) => action.type.endsWith('/fulfilled'),
+        (state, action) => {
+          state.isLoading = 'idle';
+          state.isError = null;
+        })
   },
 })
 
-export const { resetAuth, setUserAuth } = userSlice.actions;
+export const { resetAuth, setUserAuth, changeArtstoLikeProfile, getMeReducer, getUserReducer } = userSlice.actions;
 export default userSlice.reducer;

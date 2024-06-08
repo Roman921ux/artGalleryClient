@@ -3,26 +3,33 @@ import heart from '../../../../public/heart.svg'
 import heartFull from '../../../../public/heartBlack.svg'
 import { IArt } from '../../../types/arts';
 import { useAppDispatch, useAppSelector } from '../../../feature/redux-hook';
-import { changeArtstoLike, updateLikeArt } from '../../../feature/arts/arts-slice';
+import { changeArtstoLike, changeArtstoLikeDetailArt, updateLikeArt } from '../../../feature/arts/arts-slice';
+import { changeArtstoLikeProfile } from '../../../feature/user/user-slice';
 interface Props {
   art: IArt;
 }
 
 function LikeBtn({ art }: Props) {
-  const { userInfo } = useAppSelector(state => state.user)
+  const { myId } = useAppSelector(state => state.user)
   const dispatch = useAppDispatch();
 
   const ChangeLike = () => {
     dispatch(updateLikeArt(art._id))
       .then(data => {
-        dispatch(changeArtstoLike(data.payload))
+        dispatch(changeArtstoLike(data.payload));
+        dispatch(changeArtstoLikeProfile(data.payload));
+        dispatch(changeArtstoLikeDetailArt(data.payload));
       })
   };
-  const isClickToLike = art.likes.users.find(user => user === userInfo._id)
+  const isClickToLike = art?.likes?.users.find(user => user === myId);
+  // console.log('isClickToLike myId', myId)
+  // console.log('isClickToLike art', art)
+  // // console.log('userInfo', userInfo._id)
+  // console.log('isClickToLike Boolean', isClickToLike)
   return (
     <Container onClick={ChangeLike}>
       <Img src={isClickToLike ? heartFull : heart} />
-      <Count>{art.likes.count}</Count>
+      <Count>{art?.likes?.count}</Count>
     </Container>
   );
 }
