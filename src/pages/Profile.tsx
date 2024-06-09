@@ -11,13 +11,17 @@ import CardItem from '../components/HomePage/CardItem';
 import { IArt } from '../types/arts';
 import { IUserProfile } from '../types/user';
 import { artSelectProfile } from '../feature/arts/arts-slice';
+import BasiBtnGrey from '../components/shared/buttons/BasiBtnGrey';
+import LoaderProfile from '../components/Profile/LoaderProfile';
+//
+
 
 function Profile() {
   const dispatch = useAppDispatch();
   const { token } = useAppSelector(state => state.user)
   const navigate = useNavigate();
 
-  const { userInfo } = useAppSelector(state => state.user)
+  const { userInfo, isLoading } = useAppSelector(state => state.user)
   const { id } = useParams<{ id: string }>();
 
   const [inputTitle, setinputTitle] = useState('');
@@ -30,13 +34,9 @@ function Profile() {
     navigate('/login')
   }
 
-  // const [userInfo, setUserInfo] = useState<IUserProfile | null>(null);
-
-  //http://localhost:5000/api/user/6663816eb34c8c668aa2f546
-
   useEffect(() => {
     if (id) {
-      // console.log('id есть', id)
+      console.log('id есть', id)
       const fetchInfoUser = async () => {
         try {
           const { data } = await axios.get(`http://localhost:5000/api/user/${id}`);
@@ -49,7 +49,7 @@ function Profile() {
       }
       fetchInfoUser()
     } else {
-      // console.log('id нет', id)
+      console.log('id нет', id)
       const fetchInfoUser = async () => {
         try {
           const { data } = await axios.get(`http://localhost:5000/api/auth/me`,
@@ -68,11 +68,27 @@ function Profile() {
       }
       fetchInfoUser()
     }
-  }, []);
-  // console.log('userInfo', userInfo)
+  }, [navigate]);
+  // объедени их
+  // useEffect(() => {
+  //   console.log('navigate Отработал');
+
+  //   const fetchInfoUser = async () => {
+  //     try {
+  //       const { data } = await axios.get(`http://localhost:5000/api/user/${id}`);
+  //       // console.log('UserInfo если не мой профиль', data)
+  //       // setUserInfo(data)
+  //       dispatch(getUserReducer(data))
+  //     } catch (error) {
+  //       console.log('error', error)
+  //     }
+  //   }
+  //   fetchInfoUser()
+  // }, [navigate])
 
   return (
     <Container>
+      <BasiBtnGrey onClick={() => navigate(-1)}>Назад</BasiBtnGrey>
       {userInfo && <ProfileHeader resetToken={resetToken} userInfo={userInfo} />}
       <SortPanel value={{ inputTitle, inputDescript }} setValue={{ setinputTitle, setInputDescript }} />
       <FrendAndFollow />
@@ -91,8 +107,9 @@ const Container = styled.div`
   display: grid;
   gap: 20px;
   grid-template-columns: 664px 273px;
-  grid-template-rows: auto;
+  grid-template-rows: auto auto 55px;
   grid-template-areas:
+    "btnB btnB"
     "profH profH"
     "sortP faf"
     "cardB faf";

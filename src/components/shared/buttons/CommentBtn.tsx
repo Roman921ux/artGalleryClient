@@ -9,7 +9,7 @@ function CommentBtn({ art }: Props) {
   return (
     <Container>
       <Img src={comment} />
-      <Count>{art.comments.count}</Count>
+      <Count>{art?.comments?.count}</Count>
     </Container>
   );
 }

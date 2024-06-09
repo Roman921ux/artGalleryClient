@@ -18,6 +18,7 @@ function BasiBtnGrey({ onClick, children, style = {} }: Props) {
 export default BasiBtnGrey;
 
 const Container = styled.button`
+grid-area: btnB;
   border: 1px solid var(--border-color);
   width: max-content;
   color: var(--text-btnDim-color);

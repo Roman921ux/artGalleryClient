@@ -21,7 +21,16 @@ function LikeBtn({ art }: Props) {
         dispatch(changeArtstoLikeDetailArt(data.payload));
       })
   };
-  const isClickToLike = art?.likes?.users.find(user => user._id === myId);
+  // const isClickToLike = art?.likes?.users.find(user => user._id === myId);
+  const isClickToLike = art?.likes?.users.find(user => {
+    if (user._id) {
+      return user._id === myId
+    } else {
+      return user === myId
+    }
+  })
+
+  // const isClickToLike = art?.likes?.users
   // console.log('isClickToLike myId', myId)
   // console.log('isClickToLike art', art)
   // // console.log('userInfo', userInfo._id)

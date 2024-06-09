@@ -23,11 +23,12 @@ export interface IComment {
   userId: IUserProfile;
   comment: string;
   _id: string;
+  createdAt: string;
 }
 
 interface Like {
   count: number;
-  users: any[]; // Замените any на конкретный тип, если известно
+  users: any[] | string[]; // Замените any на конкретный тип, если известно
 }
 interface Comment {
   count: number;

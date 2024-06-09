@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../feature/redux-hook';
 import { IUserProfile } from '../../types/user';
 import { updateFollowerUser, updateUnsubUser } from '../../feature/user/user-slice';
 import { NavLink } from 'react-router-dom';
+import LoaderProfileHeader from '../shared/preLoader/LoaderProfileHeader';
 
 interface Props {
   resetToken: () => void,
@@ -46,13 +47,18 @@ function ProfileHeader({ resetToken, userInfo }: Props) {
     }
   }
 
-  console.log('userInfo', userInfo)
-  console.log('myId', myId)
+  // console.log('userInfo', userInfo)
+  // console.log('myId', myId)
   const isYouInFollowUser = Boolean(userInfo?.followers?.users.find(user => user._id === myId));
-  console.log('isYouInFollowUser', isYouInFollowUser)
-  console.log('isAuthenticated', isAuthenticated)
+  // console.log('isYouInFollowUser', isYouInFollowUser)
+  // console.log('isAuthenticated', isAuthenticated)
+
+  /* The commented out code `// if (isLoading === 'loading') {` and `// return <LoaderProfileHeader />`
+  is a conditional check to display a loading spinner component `LoaderProfileHeader` when the
+  `isLoading` state is set to `'loading'`. This is a common pattern used in React components to show a
+  loading indicator while data is being fetched or processed asynchronously. */
   if (isLoading === 'loading') {
-    return <h1>Загрузка</h1>
+    return <h1>Loading</h1>
   }
 
   return (
@@ -62,7 +68,8 @@ function ProfileHeader({ resetToken, userInfo }: Props) {
           <ImgBlock style={{ background: gradient }} />
           <TextBlock>
             <Title>{userInfo?.firstName}</Title>
-            <Text>{userInfo?.email}</Text>
+            <Text style={{ margin: '0px 0 0 10px' }}>{userInfo?.email}</Text>
+            <Text style={{ margin: '0px 0 0 10px' }}>Кол-во работ: {userInfo?.arts?.count}</Text>
           </TextBlock>
         </Block>
         {isYourProfile && <GreyBtn onClick={resetToken}>Выйти</GreyBtn>}
@@ -115,6 +122,7 @@ const Block = styled.div`
 const TextBlock = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 5px;
 `;
 const Title = styled.div`
   font-size: var(--fs-large);

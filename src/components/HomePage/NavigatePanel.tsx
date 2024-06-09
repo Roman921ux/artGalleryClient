@@ -3,6 +3,9 @@ import BasiButton from '../shared/buttons/BasiButton';
 import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
 import { useAppSelector } from '../../feature/redux-hook';
+import { SlPicture } from "react-icons/sl"
+import { FaRegCircleUser } from "react-icons/fa6";
+import { RiUserSmileFill } from "react-icons/ri";
 
 function NavigatePanel() {
   // const { _id } = useAppSelector(state => state.user?.userInfo)
@@ -10,17 +13,19 @@ function NavigatePanel() {
   const styleBtn = (a: number) => {
     return {
       color: active === a ? "white" : "",
-      background: active === a ? "black" : ""
+      background: active === a ? "black" : "",
+      display: 'flex',
+      gap: '10px'
     }
   }
 
   return (
     <Container>
       <NavLink to='/' style={{ "color": "inherit" }} onClick={() => setActive(0)}>
-        <BasiButton style={styleBtn(0)}>Элюстрации</BasiButton>
+        <BasiButton style={styleBtn(0)}><SlPicture />Элюстрации</BasiButton>
       </NavLink>
       <NavLink to={`profile`} style={{ "color": "inherit" }} onClick={() => setActive(1)}>
-        <BasiButton style={styleBtn(1)}>Профиль</BasiButton>
+        <BasiButton style={styleBtn(1)}><RiUserSmileFill />Профиль</BasiButton>
       </NavLink>
       {/* <NavLink to='art' style={{ "color": "inherit" }} onClick={() => setActive(2)}>
         <BasiButton style={styleBtn(2)}>Создать Art</BasiButton>

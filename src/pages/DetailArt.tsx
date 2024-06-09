@@ -22,24 +22,6 @@ function DetailArt() {
   useLayoutEffect(() => {
     if (id) {
       dispatch(getOneArt(id));
-      const fetchInfoUser = async () => {
-        try {
-          const { data } = await axios.get(`http://localhost:5000/api/auth/me`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`
-              }
-            }
-          );
-          console.log('Our User', data)
-          // setUserInfo(data)
-          dispatch(getMeReducer(data))
-        } catch (error) {
-          console.log('error', error)
-        }
-      }
-      fetchInfoUser()
-      // dispatch(getMeReducer())
     }
   }, []);
 
