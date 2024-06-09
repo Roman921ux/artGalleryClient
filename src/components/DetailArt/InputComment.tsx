@@ -17,7 +17,7 @@ function InputComment() {
     if (token) {
       const fetchInfoUser = async () => {
         try {
-          const { data } = await axios.get(`http://localhost:5000/api/auth/me`,
+          const { data } = await axios.get(`auth/me`,
             {
               headers: {
                 Authorization: `Bearer ${token}`
@@ -39,7 +39,7 @@ function InputComment() {
     if (e.key === 'Enter') {
       if (token) {
         try {
-          const { data } = await axios.patch(`http://localhost:5000/api/arts/${detailArt?._id}/comment`,
+          const { data } = await axios.patch(`/arts/${detailArt?._id}/comment`,
             { comment: value },
             {
               headers: {
