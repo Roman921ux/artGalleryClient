@@ -147,9 +147,6 @@ const userSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(registerThunk.fulfilled, (_, action) => {
-        // console.log('extraR', action.payload)
-      })
       .addCase(getMe.fulfilled, (state, action) => {
         state.userInfo = action.payload
       })
@@ -173,12 +170,12 @@ const userSlice = createSlice({
           state.isError = null;
         })
       .addMatcher((action) => action.type.endsWith('/rejected'),
-        (state, action) => {
+        (state) => {
           state.isLoading = 'idle';
           state.isError = 'error';
         })
       .addMatcher((action) => action.type.endsWith('/fulfilled'),
-        (state, action) => {
+        (state) => {
           state.isLoading = 'idle';
           state.isError = null;
         })
