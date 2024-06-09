@@ -22,6 +22,7 @@ function UserComment({ comment }: Props) {
       <UserInfoBlock>
         <NavLink style={{ color: 'inherit' }} to={`/profile/${comment.userId._id}`}> <Title>{comment.userId?.firstName}</Title></NavLink>
         <SmallText>{dateComment}</SmallText>
+
       </UserInfoBlock>
 
       <Block>
