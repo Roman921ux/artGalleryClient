@@ -1,3 +1,4 @@
+import { IUserProfile } from "./user";
 
 interface User {
   followers: {
@@ -18,6 +19,12 @@ interface User {
   updatedAt: string;
   __v: number;
 }
+export interface IComment {
+  userId: IUserProfile;
+  comment: string;
+  _id: string;
+}
+
 interface Like {
   count: number;
   users: any[]; // Замените any на конкретный тип, если известно

@@ -9,23 +9,47 @@ import BasiBtnGrey from '../components/shared/buttons/BasiBtnGrey';
 import { useAppDispatch, useAppSelector } from '../feature/redux-hook';
 import { getOneArt } from '../feature/arts/arts-slice';
 import { getMeReducer } from '../feature/user/user-slice';
+import InputComment from '../components/DetailArt/InputComment';
+import UserComment from '../components/DetailArt/UserComment';
 
 function DetailArt() {
   const dispatch = useAppDispatch();
-  const { detailArt } = useAppSelector(state => state.arts)
+  const { detailArt } = useAppSelector(state => state.arts);
+  const { token } = useAppSelector(state => state.user)
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate()
 
   useLayoutEffect(() => {
     if (id) {
-      dispatch(getOneArt(id))
+      dispatch(getOneArt(id));
+      const fetchInfoUser = async () => {
+        try {
+          const { data } = await axios.get(`http://localhost:5000/api/auth/me`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`
+              }
+            }
+          );
+          console.log('Our User', data)
+          // setUserInfo(data)
+          dispatch(getMeReducer(data))
+        } catch (error) {
+          console.log('error', error)
+        }
+      }
+      fetchInfoUser()
       // dispatch(getMeReducer())
     }
-  }, [])
+  }, []);
+
+
   return (
     <Container>
       <BasiBtnGrey onClick={() => navigate(-1)}>Назад</BasiBtnGrey>
       {detailArt && <LargeCardItem art={detailArt} />}
+      <InputComment />
+      {detailArt && detailArt.comments.commentList.map(comment => <UserComment comment={comment} />)}
     </Container>
   );
 }

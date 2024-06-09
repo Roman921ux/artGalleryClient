@@ -17,19 +17,21 @@ function Profile() {
   const { token } = useAppSelector(state => state.user)
   const navigate = useNavigate();
 
+  const { userInfo } = useAppSelector(state => state.user)
+  const { id } = useParams<{ id: string }>();
+
   const [inputTitle, setinputTitle] = useState('');
   const [inputDescript, setInputDescript] = useState('');
-  const arts = useAppSelector(state => artSelectProfile(state.user.userInfo.arts.items, inputTitle, inputDescript));
+  const arts = useAppSelector(state => artSelectProfile(state.user.userInfo?.arts?.items, inputTitle, inputDescript));
+
 
   const resetToken = () => {
     dispatch(resetAuth())
     navigate('/login')
   }
 
-
   // const [userInfo, setUserInfo] = useState<IUserProfile | null>(null);
-  const { userInfo } = useAppSelector(state => state.user)
-  const { id } = useParams<{ id: string }>();
+
   //http://localhost:5000/api/user/6663816eb34c8c668aa2f546
 
   useEffect(() => {
@@ -76,7 +78,7 @@ function Profile() {
       <FrendAndFollow />
       <CardBlock>
         {/* {userInfo && userInfo.arts && userInfo?.arts.items.map((art: IArt) => <CardItem key={art._id} art={art} />)} */}
-        {arts && arts.map((art: IArt) => <CardItem key={art._id} art={art} />)}
+        {arts && arts.slice().reverse().map((art: IArt) => <CardItem key={art._id} art={art} />)}
         {/* slice().reverse(). */}
       </CardBlock>
     </Container>

@@ -7,7 +7,6 @@ function Layout() {
   return (
     <>
       <Header />
-
       <MainBlock>
         <Container>
           <NavigatePanel />

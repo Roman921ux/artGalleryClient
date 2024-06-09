@@ -22,9 +22,9 @@ function NavigatePanel() {
       <NavLink to={`profile`} style={{ "color": "inherit" }} onClick={() => setActive(1)}>
         <BasiButton style={styleBtn(1)}>Профиль</BasiButton>
       </NavLink>
-      <NavLink to='art' style={{ "color": "inherit" }} onClick={() => setActive(2)}>
+      {/* <NavLink to='art' style={{ "color": "inherit" }} onClick={() => setActive(2)}>
         <BasiButton style={styleBtn(2)}>Создать Art</BasiButton>
-      </NavLink>
+      </NavLink> */}
     </Container>
   );
 }

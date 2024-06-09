@@ -52,6 +52,26 @@ export const updateLikeArt = createAsyncThunk(
     }
   }
 )
+// export const updateCommentArt = createAsyncThunk(
+//   'art/updateCommentArt',
+//   async (artId: string, { getState, dispatch }) => {
+//     try {
+//       const token = (getState() as { user: IUser }).user.token;
+//       const { data } = await axios.patch(`arts/${artId}/comment`,
+//         {},
+//         {
+//           headers: {
+//             Authorization: `Bearer ${token}`
+//           }
+//         }
+//       );
+//       // console.log('postlike', data)
+//       return data
+//     } catch (error) {
+//       console.log('Error', error)
+//     }
+//   }
+// )
 export const getAllRooms = createAsyncThunk(
   'art/getAllRooms',
   async () => {
@@ -96,6 +116,8 @@ export const getOneArt = createAsyncThunk(
   }
 )
 
+
+
 const initialState: IArtsSlice = {
   arts: [],
   popularArts: [],
@@ -111,20 +133,30 @@ const artsSlice = createSlice({
   initialState,
   reducers: {
     changeArtstoLike: (state, action: PayloadAction<IArt>) => {
-      console.log('action.payload', action.payload)
+      console.log('changeArtstoLike', action.payload)
       const artId = action.payload._id
       const index = state.arts.findIndex(art => art._id === artId);
       if (index !== -1) {
         state.arts[index] = action.payload;
       }
-
     },
+    // changeArtstoComment: (state, action: PayloadAction<IArt>) => {
+    //   console.log('changeArtstoComment', action.payload)
+    //   const artId = action.payload._id
+    //   const index = state.arts.findIndex(art => art._id === artId);
+    //   if (index !== -1) {
+    //     state.arts[index] = action.payload;
+    //   }
+    // },
     changeRoom: (state, action: PayloadAction<string>) => {
       state.activeRoom = action.payload;
     },
     changeArtstoLikeDetailArt: (state, action: PayloadAction<IArt>) => {
       state.detailArt = action.payload
-    }
+    },
+    changeArtstoCommentDetailArt: (state, action: PayloadAction<IArt>) => {
+      state.detailArt = action.payload
+    },
   },
   extraReducers(builder) {
     builder
@@ -212,33 +244,37 @@ export const artSelect = (arts: IArt[], activeRoom: string, author: string, artN
       return textMatch;
     });
 }
-export const artSelectProfile = (arts: IArt[], artName: string, artDescript: string) => {
-  return arts
-    .filter(art => {
-      // Фильтрация по строке поиска названия
-      // if (artName) {
-      //   return art.title.toLocaleLowerCase().includes(artName.toLocaleLowerCase())
-      // }
-      // return true
-      const textMatch = artName
-        ? new RegExp(artName.trim().split(/\s+/).map(word => `(?=.*${word})`).join(''), 'i').test(art.title)
-        : true;
+export const artSelectProfile = (arts: IArt[] | undefined, artName: string, artDescript: string) => {
+  if (arts) {
+    return arts
+      .filter(art => {
+        // Фильтрация по строке поиска названия
+        // if (artName) {
+        //   return art.title.toLocaleLowerCase().includes(artName.toLocaleLowerCase())
+        // }
+        // return true
+        const textMatch = artName
+          ? new RegExp(artName.trim().split(/\s+/).map(word => `(?=.*${word})`).join(''), 'i').test(art.title)
+          : true;
 
-      return textMatch;
-    })
-    .filter(art => {
-      // Фильтрация по строке поиска названия
-      // if (artDescript) {
-      //   return art.text.toLocaleLowerCase().includes(artDescript.toLocaleLowerCase())
-      // }
-      // return true
-      const textMatch = artDescript
-        ? new RegExp(artDescript.trim().split(/\s+/).map(word => `(?=.*${word})`).join(''), 'i').test(art.text)
-        : true;
+        return textMatch;
+      })
+      .filter(art => {
+        // Фильтрация по строке поиска названия
+        // if (artDescript) {
+        //   return art.text.toLocaleLowerCase().includes(artDescript.toLocaleLowerCase())
+        // }
+        // return true
+        const textMatch = artDescript
+          ? new RegExp(artDescript.trim().split(/\s+/).map(word => `(?=.*${word})`).join(''), 'i').test(art.text)
+          : true;
 
-      return textMatch;
-    });
+        return textMatch;
+      });
+  } else {
+    return []
+  }
 }
 
-export const { changeArtstoLike, changeRoom, changeArtstoLikeDetailArt } = artsSlice.actions;
+export const { changeArtstoLike, changeRoom, changeArtstoLikeDetailArt, changeArtstoCommentDetailArt } = artsSlice.actions;
 export default artsSlice.reducer;

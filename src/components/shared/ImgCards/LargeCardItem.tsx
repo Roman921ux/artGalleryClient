@@ -6,6 +6,11 @@ import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../feature/redux-hook';
 import axios from 'axios';
 import { getMeReducer } from '../../../feature/user/user-slice';
+// import { marked } from 'marked';
+import ReactMarkdown from 'react-markdown'
+import CommentBtn from '../buttons/CommentBtn';
+import ViewBtn from '../buttons/ViewBtn';
+
 
 interface Props {
   art: IArt;
@@ -59,7 +64,7 @@ function LargeCardItem({ art }: Props) {
         <InfoBlock>
           <Block style={{ padding: '0', gap: '15px' }}>
             <Title style={{ width: '380px' }}>{art?.title}</Title>
-            {art.text && <Description style={{ width: '700px' }}>{art.text}</Description>}
+            {art.text && <Description style={{ width: '700px' }}><ReactMarkdown children={art.text} /></Description>}
           </Block>
           <UserInfoBlock>
             {location.pathname === '/' || isYourArt === false && <NavLink style={{ color: 'inherit' }} to={`/profile/${art.user._id}`}><Title>{art.user?.firstName}</Title></NavLink>}
@@ -68,6 +73,8 @@ function LargeCardItem({ art }: Props) {
         </InfoBlock>
         <ReactionBlock>
           <LikeBtn art={art} />
+          <CommentBtn art={art} />
+          <ViewBtn art={art} />
         </ReactionBlock>
       </Block>
     </Container>
@@ -134,6 +141,10 @@ const Text = styled.div`
 const Description = styled.div`
   font-size: var(--fs-medium);
   color: var(--text-color);
+  padding-left: 15px;
 `;
 const ReactionBlock = styled.div`
+  display: flex;
+  gap: 5px;
 `;
+

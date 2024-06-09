@@ -34,7 +34,7 @@ function SortPanel({ value, setValue }: Props) {
   return (
     <Container>
       {/* <span>{activeRoom}</span> */}
-      {value.inputAuthor && <Input placeholder='Найти по автору' name='author' value={value.inputAuthor} onChange={handleChange} />}
+      {value.inputAuthor !== undefined && <Input placeholder='Найти по автору' name='author' value={value.inputAuthor} onChange={handleChange} />}
       <Input placeholder='Найти по названию' name='title' value={value.inputTitle} onChange={handleChange} />
       <Input placeholder='Найти по описанию' name='descript' value={value.inputDescript} onChange={handleChange} />
     </Container>

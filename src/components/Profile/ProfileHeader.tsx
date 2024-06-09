@@ -3,6 +3,7 @@ import GreyBtn from '../shared/buttons/GreyBtn';
 import { useAppDispatch, useAppSelector } from '../../feature/redux-hook';
 import { IUserProfile } from '../../types/user';
 import { updateFollowerUser, updateUnsubUser } from '../../feature/user/user-slice';
+import { NavLink } from 'react-router-dom';
 
 interface Props {
   resetToken: () => void,
@@ -68,7 +69,10 @@ function ProfileHeader({ resetToken, userInfo }: Props) {
       </Block>
       <Block>
         {isYourProfile ? (
-          <GreyBtn>Редактировать профиль</GreyBtn>
+          <Block style={{ gap: '10px' }}>
+            <GreyBtn>Редактировать профиль</GreyBtn>
+            <NavLink to='/art' style={{ color: 'inherit' }}><GreyBtn>Создать Art</GreyBtn></NavLink>
+          </Block>
         ) : (
           <Block style={{ gap: '10px' }}>
             {isYouInFollowUser ? (

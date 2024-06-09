@@ -3,6 +3,8 @@ import { IArt } from '../../types/arts';
 import LikeBtn from '../shared/buttons/LikeBtn';
 import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
+import ViewBtn from '../shared/buttons/ViewBtn';
+import CommentBtn from '../shared/buttons/CommentBtn';
 
 interface Props {
   art: IArt;
@@ -41,6 +43,8 @@ function CardItem({ art }: Props) {
         </InfoBlock>
         <ReactionBlock>
           <LikeBtn art={art} />
+          <CommentBtn art={art} />
+          <ViewBtn art={art} />
         </ReactionBlock>
       </Block>
     </Container >
@@ -104,4 +108,6 @@ const Text = styled.div`
   color: var(--text-dim-color);
 `;
 const ReactionBlock = styled.div`
+  display: flex;
+  gap: 5px;
 `;

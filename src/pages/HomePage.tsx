@@ -33,7 +33,7 @@ export default HomePage;
 
 const Container = styled.div`
   display: grid;
-  gap: 20px;
+  gap: 15px;
   grid-template-columns: 664px 273px;
   grid-template-rows: auto;
   grid-template-areas:
