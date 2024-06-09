@@ -4,7 +4,6 @@ import { useAppDispatch, useAppSelector } from '../../feature/redux-hook';
 import { IUserProfile } from '../../types/user';
 import { updateFollowerUser, updateUnsubUser } from '../../feature/user/user-slice';
 import { NavLink } from 'react-router-dom';
-import LoaderProfileHeader from '../shared/preLoader/LoaderProfileHeader';
 
 interface Props {
   resetToken: () => void,
@@ -138,7 +137,4 @@ const ImgBlock = styled.div`
   height: 125px;
   background-color: #d0d0d0;
   border-radius: 5px;
-`;
-const Img = styled.img`
-  
 `;

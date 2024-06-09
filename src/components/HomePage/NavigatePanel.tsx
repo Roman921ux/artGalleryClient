@@ -2,9 +2,7 @@ import styled from 'styled-components';
 import BasiButton from '../shared/buttons/BasiButton';
 import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
-import { useAppSelector } from '../../feature/redux-hook';
 import { SlPicture } from "react-icons/sl"
-import { FaRegCircleUser } from "react-icons/fa6";
 import { RiUserSmileFill } from "react-icons/ri";
 
 function NavigatePanel() {

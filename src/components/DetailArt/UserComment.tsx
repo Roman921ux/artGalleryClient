@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { IArt, IComment } from '../../types/arts';
+import { IComment } from '../../types/arts';
 import { NavLink } from 'react-router-dom';
 
 interface Props {

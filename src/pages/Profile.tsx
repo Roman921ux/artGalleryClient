@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '../feature/redux-hook';
-import { getMe, getMeReducer, getUserReducer, resetAuth } from '../feature/user/user-slice';
+import { getMeReducer, getUserReducer, resetAuth } from '../feature/user/user-slice';
 import { useNavigate, useParams } from 'react-router-dom';
 import ProfileHeader from '../components/Profile/ProfileHeader';
 import SortPanel from '../components/HomePage/SortPanel';
@@ -9,10 +9,8 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import CardItem from '../components/HomePage/CardItem';
 import { IArt } from '../types/arts';
-import { IUserProfile } from '../types/user';
 import { artSelectProfile } from '../feature/arts/arts-slice';
 import BasiBtnGrey from '../components/shared/buttons/BasiBtnGrey';
-import LoaderProfile from '../components/Profile/LoaderProfile';
 //
 
 
@@ -21,7 +19,7 @@ function Profile() {
   const { token } = useAppSelector(state => state.user)
   const navigate = useNavigate();
 
-  const { userInfo, isLoading } = useAppSelector(state => state.user)
+  const { userInfo } = useAppSelector(state => state.user)
   const { id } = useParams<{ id: string }>();
 
   const [inputTitle, setinputTitle] = useState('');

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import regist from '../../public/img2.svg'
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../feature/redux-hook';
+import { useAppDispatch } from '../feature/redux-hook';
 import { loginThunk } from '../feature/user/user-slice';
 // toast
 import { ToastContainer, toast } from 'react-toastify';
