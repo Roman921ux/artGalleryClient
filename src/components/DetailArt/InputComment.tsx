@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '../../feature/redux-hook';
-import axios from 'axios';
+// import axios from 'axios';
+import axios from '../../utils/axios'
 import { IUserProfile } from '../../types/user';
 import { changeArtstoCommentDetailArt } from '../../feature/arts/arts-slice';
 

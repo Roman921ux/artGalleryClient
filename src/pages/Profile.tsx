@@ -6,7 +6,8 @@ import ProfileHeader from '../components/Profile/ProfileHeader';
 import SortPanel from '../components/HomePage/SortPanel';
 import FrendAndFollow from '../components/Profile/FrendAndFollow';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
+import axios from '../utils/axios'
 import CardItem from '../components/HomePage/CardItem';
 import { IArt } from '../types/arts';
 import { artSelectProfile } from '../feature/arts/arts-slice';
@@ -37,7 +38,7 @@ function Profile() {
       console.log('id есть', id)
       const fetchInfoUser = async () => {
         try {
-          const { data } = await axios.get(`http://localhost:5000/api/user/${id}`);
+          const { data } = await axios.get(`/user/${id}`);
           console.log('UserInfo если не мой профиль', data)
           // setUserInfo(data)
           dispatch(getUserReducer(data))
@@ -50,7 +51,7 @@ function Profile() {
       console.log('id нет', id)
       const fetchInfoUser = async () => {
         try {
-          const { data } = await axios.get(`http://localhost:5000/api/auth/me`,
+          const { data } = await axios.get(`/auth/me`,
             {
               headers: {
                 Authorization: `Bearer ${token}`

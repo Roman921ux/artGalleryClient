@@ -4,7 +4,8 @@ import LikeBtn from '../buttons/LikeBtn';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../feature/redux-hook';
-import axios from 'axios';
+// import axios from 'axios';
+import axios from '../../../utils/axios'
 import { getMeReducer } from '../../../feature/user/user-slice';
 // import { marked } from 'marked';
 import ReactMarkdown from 'react-markdown'
@@ -36,7 +37,7 @@ function LargeCardItem({ art }: Props) {
 
   useEffect(() => {
     const fetchInfoUser = async () => {
-      const { data } = await axios.get(`http://localhost:5000/api/auth/me`,
+      const { data } = await axios.get(`/auth/me`,
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -57,7 +58,7 @@ function LargeCardItem({ art }: Props) {
     <Container>
       {art.imageUrl && (
         <ImgBlock onClick={() => navigate(`art/${art._id}`)}>
-          <Img src={`http://localhost:5000${art.imageUrl}`} />
+          <Img src={`https://art-gallery-server-eight.vercel.app${art.imageUrl}`} />
         </ImgBlock>
       )}
       <Block>

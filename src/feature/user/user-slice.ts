@@ -20,15 +20,16 @@ export const loginThunk = createAsyncThunk(
   'user/login',
   async (body: ILogin) => {
     try {
-      const res = await fetch('http://localhost:5000/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(body)
-      });
-      const data = await res.json()
-      if (res.ok) {
+      const { data } = await axios.post('/auth/login',
+        { email: body.email, password: body.password },
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          },
+        }
+      )
+      // const data = await res.json()
+      if (data) {
         return data
       } else {
         throw new Error('Произошла ошибка при авторизация')
@@ -42,15 +43,23 @@ export const getMe = createAsyncThunk(
   'user/getMe',
   async (token: string) => {
     try {
-      const res = await fetch('http://localhost:5000/api/auth/me', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-      });
-      const data = await res.json()
-      if (res.ok) {
+      const { data } = await axios.get('/auth/login',
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+        }
+      );
+      // const res = await axios.get('/auth/me', {
+      //   method: 'GET',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //     'Authorization': `Bearer ${token}`
+      //   },
+      // });
+      // const data = await res.json()
+      if (data) {
         console.log('Getme', data)
         return data
 
@@ -103,6 +112,18 @@ export const updateUnsubUser = createAsyncThunk(
   }
 )
 
+
+// const { data } = await axios.patch(`unsub/${userId}`,
+//   {},
+//   {
+//     headers: {
+//       Authorization: `Bearer ${token}`
+//     }
+//     headers: {
+//       'Content-Type': 'application/json'
+//     },
+//   }
+// );
 
 const initialState: IUser = {
   isAuthenticated: false,

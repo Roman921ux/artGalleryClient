@@ -4,6 +4,7 @@ import LikeBtn from '../shared/buttons/LikeBtn';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import ViewBtn from '../shared/buttons/ViewBtn';
 import CommentBtn from '../shared/buttons/CommentBtn';
+import { domian } from '../../utils/axios';
 
 interface Props {
   art: IArt;
@@ -29,7 +30,7 @@ function CardItem({ art }: Props) {
     <Container>
       {art.imageUrl && (
         <ImgBlock onClick={() => navigate(`/art/${art._id}`)}>
-          <Img src={`http://localhost:5000${art.imageUrl}`} />
+          <Img src={`${domian}${art.imageUrl}`} />
         </ImgBlock>
       )}
       <Block>

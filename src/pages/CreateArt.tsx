@@ -5,7 +5,8 @@ import { getAllRooms } from '../feature/arts/arts-slice';
 //
 import SimpleMDE from 'react-simplemde-editor';
 import 'easymde/dist/easymde.min.css';
-import axios from 'axios';
+// import axios from 'axios';
+import axios from '../utils/axios'
 import { IRoom } from '../types/arts';
 import BasiBtnGrey from '../components/shared/buttons/BasiBtnGrey';
 import GreyBtn from '../components/shared/buttons/GreyBtn';
@@ -57,8 +58,7 @@ function CreateArt() {
     };
     console.log('formData', formData)
 
-    const { data } = await axios.post(
-      'http://localhost:5000/api/arts',
+    const { data } = await axios.post('arts',
       formData,
       {
         headers: {
@@ -80,7 +80,7 @@ function CreateArt() {
       const formData = new FormData();
       formData.append('image', e.target.files[0]);
       const { data } = await axios.post(
-        'http://localhost:5000/api/upload',
+        '/upload',
         formData,
         {
           headers: {
@@ -129,7 +129,7 @@ function CreateArt() {
 
       <Form onSubmit={submitHandler}>
         <ImgBlock>
-          {image && <IMG src={`http://localhost:5000${image}`} />}
+          {image && <IMG src={`https://art-gallery-server-eight.vercel.app/${image}`} />}
         </ImgBlock>
         <BlockForm>
           <label>

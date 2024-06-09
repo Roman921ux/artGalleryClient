@@ -10,7 +10,8 @@ import { useAppDispatch } from "./feature/redux-hook"
 import { getMe, getMeReducer, setUserAuth } from "./feature/user/user-slice"
 import CreateArt from "./pages/CreateArt"
 import DetailArt from "./pages/DetailArt"
-import axios from "axios"
+// import axios from "axios"
+import axios from './utils/axios'
 
 
 
@@ -26,14 +27,14 @@ function App() {
       dispatch(getMe(token))
 
       const fetchInfoUser = async () => {
-        const { data } = await axios.get(`http://localhost:5000/api/auth/me`,
+        const { data } = await axios.get(`/auth/me`,
           {
             headers: {
               Authorization: `Bearer ${token}`
             }
           }
         );
-        // console.log('Our User', data)
+        // console.log('Запрос в App', data)
         // setUserInfo(data)
         dispatch(getMeReducer(data))
       }

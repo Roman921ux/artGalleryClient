@@ -107,7 +107,7 @@ export const getOneArt = createAsyncThunk(
   'art/getOneArt',
   async (id: string) => {
     try {
-      const { data } = await axios.get(`http://localhost:5000/api/arts/${id}`);
+      const { data } = await axios.get(`/arts/${id}`);
       console.log('getOneArt', data)
       return data
     } catch (error) {
