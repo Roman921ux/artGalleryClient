@@ -1,5 +1,5 @@
-import { useAppDispatch, useAppSelector } from './feature/redux-hook';
-import React, { useEffect, useLayoutEffect } from 'react';
+import { useAppDispatch } from './feature/redux-hook';
+import React, { useLayoutEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { setUserAuth } from './feature/user/user-slice';
 interface Props {

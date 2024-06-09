@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '../../../feature/redux-hook';
 import { createRoom } from '../../../feature/arts/arts-slice';
-import { useSelector } from 'react-redux';
 
 function CreateRoom() {
   const dispatch = useAppDispatch();

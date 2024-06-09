@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 import { IArt } from '../../types/arts';
 import LikeBtn from '../shared/buttons/LikeBtn';
-import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { useState } from 'react';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import ViewBtn from '../shared/buttons/ViewBtn';
 import CommentBtn from '../shared/buttons/CommentBtn';
 

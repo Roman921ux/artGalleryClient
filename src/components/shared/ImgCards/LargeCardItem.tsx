@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { IArt } from '../../../types/arts';
 import LikeBtn from '../buttons/LikeBtn';
-import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../feature/redux-hook';
 import axios from 'axios';
 import { getMeReducer } from '../../../feature/user/user-slice';

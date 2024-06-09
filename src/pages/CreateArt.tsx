@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '../feature/redux-hook';
-import { createArt, getAllRooms } from '../feature/arts/arts-slice';
+import { getAllRooms } from '../feature/arts/arts-slice';
 //
 import SimpleMDE from 'react-simplemde-editor';
 import 'easymde/dist/easymde.min.css';

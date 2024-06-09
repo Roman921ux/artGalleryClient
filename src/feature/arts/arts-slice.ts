@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 // PayloadAction
 import axios from '../../utils/axios'
-import { IArt, IArtsSlice, IChangeArtstoLike } from "../../types/arts";
+import { IArt, IArtsSlice } from "../../types/arts";
 import { IUser } from "../../types/user";
 
 interface IPropsCreateRooms {
@@ -34,7 +34,7 @@ export const getAllArts = createAsyncThunk(
 )
 export const updateLikeArt = createAsyncThunk(
   'art/updateLikeArt',
-  async (artId: string, { getState, dispatch }) => {
+  async (artId: string, { getState }) => {
     try {
       const token = (getState() as { user: IUser }).user.token;
       const { data } = await axios.patch(`arts/${artId}/like`,
@@ -186,12 +186,12 @@ const artsSlice = createSlice({
           state.isError = null;
         })
       .addMatcher((action) => action.type.endsWith('/rejected'),
-        (state, action) => {
+        (state) => {
           state.isLoading = 'idle';
           state.isError = 'error';
         })
       .addMatcher((action) => action.type.endsWith('/fulfilled'),
-        (state, action) => {
+        (state) => {
           state.isLoading = 'idle';
           state.isError = null;
         })

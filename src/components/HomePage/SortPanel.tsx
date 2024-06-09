@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import { useAppSelector } from '../../feature/redux-hook';
-import React, { useState } from 'react';
+import React from 'react';
 
 interface Props {
   value: {

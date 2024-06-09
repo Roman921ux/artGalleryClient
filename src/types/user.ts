@@ -53,17 +53,6 @@ interface IArts {
 }
 
 
-interface ILikes {
-  count: number;
-  users: IUser[];
-}
 
-interface IComments {
-  count: number;
-  commentList: IComment[];
-}
 
-interface IComment {
-  // Define the properties of a comment here
-}
 
