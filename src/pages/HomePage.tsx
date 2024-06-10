@@ -1,19 +1,17 @@
 import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '../feature/redux-hook';
-// import SortPanel from '../components/HomePage/SortPanel';
+import SortPanel from '../components/HomePage/SortPanel';
 import RoomChoose from '../components/HomePage/RoomChoose';
 import CardItem from '../components/HomePage/CardItem';
-import { useEffect } from 'react';
-import { getAllArts } from '../feature/arts/arts-slice';
+import { useEffect, useState } from 'react';
+import { artSelect, getAllArts } from '../feature/arts/arts-slice';
 
 function HomePage() {
   const dispatch = useAppDispatch();
-  // const [inputAuthor, setinputAuthor] = useState('');
-  // const [inputTitle, setinputTitle] = useState('');
-  // const [inputDescript, setInputDescript] = useState('');
-  const { arts } = useAppSelector(state => state.arts)
-
-  // const arts = useAppSelector(state => artSelect(state.arts.arts, state.arts.activeRoom, inputAuthor, inputTitle, inputDescript));
+  const [inputAuthor, setinputAuthor] = useState('');
+  const [inputTitle, setinputTitle] = useState('');
+  const [inputDescript, setInputDescript] = useState('');
+  const arts = useAppSelector(state => artSelect(state.arts.arts, state.arts.activeRoom, inputAuthor, inputTitle, inputDescript));
 
 
   useEffect(() => {
@@ -22,7 +20,7 @@ function HomePage() {
 
   return (
     <Container>
-      {/* <SortPanel value={{ inputAuthor, inputTitle, inputDescript }} setValue={{ setinputAuthor, setinputTitle, setInputDescript }} /> */}
+      <SortPanel value={{ inputAuthor, inputTitle, inputDescript }} setValue={{ setinputAuthor, setinputTitle, setInputDescript }} />
       <CardBlock>
         {arts && arts.slice().reverse().map(art => <CardItem key={art._id} art={art} />)}
       </CardBlock>
@@ -39,7 +37,7 @@ const Container = styled.div`
   grid-template-columns: 664px 273px;
   grid-template-rows: auto;
   grid-template-areas:
-    "cardB roomC"
+    "sortP roomC"
     "cardB roomC"
     ".     roomC";
 `;

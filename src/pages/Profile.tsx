@@ -3,14 +3,14 @@ import { useAppDispatch, useAppSelector } from '../feature/redux-hook';
 import { getMeReducer, getUserReducer, resetAuth } from '../feature/user/user-slice';
 import { useNavigate, useParams } from 'react-router-dom';
 import ProfileHeader from '../components/Profile/ProfileHeader';
-// import SortPanel from '../components/HomePage/SortPanel';
+import SortPanel from '../components/HomePage/SortPanel';
 import FrendAndFollow from '../components/Profile/FrendAndFollow';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 // import axios from 'axios';
 import axios from '../utils/axios'
 import CardItem from '../components/HomePage/CardItem';
 import { IArt } from '../types/arts';
-// import { artSelectProfile } from '../feature/arts/arts-slice';
+import { artSelectProfile } from '../feature/arts/arts-slice';
 import BasiBtnGrey from '../components/shared/buttons/BasiBtnGrey';
 //
 
@@ -21,12 +21,11 @@ function Profile() {
   const navigate = useNavigate();
 
   const { userInfo } = useAppSelector(state => state.user)
-  const { arts } = useAppSelector(state => state.arts)
   const { id } = useParams<{ id: string }>();
 
-  // const [inputTitle, setinputTitle] = useState('');
-  // const [inputDescript, setInputDescript] = useState('');
-  // const arts = useAppSelector(state => artSelectProfile(state.user.userInfo?.arts?.items, inputTitle, inputDescript));
+  const [inputTitle, setinputTitle] = useState('');
+  const [inputDescript, setInputDescript] = useState('');
+  const arts = useAppSelector(state => artSelectProfile(state.user.userInfo?.arts?.items, inputTitle, inputDescript));
 
 
   const resetToken = () => {
@@ -90,7 +89,7 @@ function Profile() {
     <Container>
       <BasiBtnGrey onClick={() => navigate(-1)}>Назад</BasiBtnGrey>
       {userInfo && <ProfileHeader resetToken={resetToken} userInfo={userInfo} />}
-      {/* <SortPanel value={{ inputTitle, inputDescript }} setValue={{ setinputTitle, setInputDescript }} /> */}
+      <SortPanel value={{ inputTitle, inputDescript }} setValue={{ setinputTitle, setInputDescript }} />
       <FrendAndFollow />
       <CardBlock>
         {/* {userInfo && userInfo.arts && userInfo?.arts.items.map((art: IArt) => <CardItem key={art._id} art={art} />)} */}
@@ -111,7 +110,7 @@ const Container = styled.div`
   grid-template-areas:
     "btnB btnB"
     "profH profH"
-    "cardB faf"
+    "sortP faf"
     "cardB faf";
 `;
 
