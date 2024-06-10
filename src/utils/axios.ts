@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const instance = axios.create({
   // baseURL: 'http://localhost:5000/api',
-  baseURL: 'https://art-gallery-server-eight.vercel.app/api',
+  baseURL: 'https://8a42-95-153-133-136.ngrok-free.app/api',
 });
 
 instance.interceptors.request.use((config) => {
@@ -10,5 +10,5 @@ instance.interceptors.request.use((config) => {
   return config
 });
 
-export const domian = 'https://art-gallery-server-eight.vercel.app'
+export const domian = 'https://8a42-95-153-133-136.ngrok-free.app'
 export default instance

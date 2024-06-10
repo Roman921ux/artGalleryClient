@@ -58,7 +58,7 @@ function LargeCardItem({ art }: Props) {
     <Container>
       {art.imageUrl && (
         <ImgBlock onClick={() => navigate(`art/${art._id}`)}>
-          <Img src={`https://art-gallery-server-eight.vercel.app${art.imageUrl}`} />
+          <Img src={`https://8a42-95-153-133-136.ngrok-free.app${art.imageUrl}`} />
         </ImgBlock>
       )}
       <Block>

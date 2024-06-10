@@ -5,8 +5,7 @@ import { getAllRooms } from '../feature/arts/arts-slice';
 //
 import SimpleMDE from 'react-simplemde-editor';
 import 'easymde/dist/easymde.min.css';
-// import axios from 'axios';
-import axios from '../utils/axios'
+import axios from 'axios';
 import { IRoom } from '../types/arts';
 import BasiBtnGrey from '../components/shared/buttons/BasiBtnGrey';
 import GreyBtn from '../components/shared/buttons/GreyBtn';
@@ -58,7 +57,8 @@ function CreateArt() {
     };
     console.log('formData', formData)
 
-    const { data } = await axios.post('arts',
+    const { data } = await axios.post(
+      'https://8a42-95-153-133-136.ngrok-free.app/api/arts',
       formData,
       {
         headers: {
@@ -80,7 +80,7 @@ function CreateArt() {
       const formData = new FormData();
       formData.append('image', e.target.files[0]);
       const { data } = await axios.post(
-        '/upload',
+        'https://8a42-95-153-133-136.ngrok-free.app/api/upload',
         formData,
         {
           headers: {
@@ -129,7 +129,7 @@ function CreateArt() {
 
       <Form onSubmit={submitHandler}>
         <ImgBlock>
-          {image && <IMG src={`https://art-gallery-server-eight.vercel.app/${image}`} />}
+          {image && <IMG src={`https://8a42-95-153-133-136.ngrok-free.app${image}`} />}
         </ImgBlock>
         <BlockForm>
           <label>
